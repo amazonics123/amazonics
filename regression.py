@@ -5,9 +5,23 @@ import numpy as np
 def get_score(x, y):
     '''
     '''
-
-    return np.corrcoef(x,y)[0][1] * \
-        np.log(min(1000, np.sum(y)) * min(1000, np.sum(x)))
+    
+    orig_len = len(x)
+    start = 0
+    for i in range(orig_len):
+    	if x[i] != 0:
+    		start = i
+    		break
+    for j in range(start, orig_len):
+    	if y[j] != 0:
+    		start = j
+    		break
+    	if j == orig_len - 1:
+    		return 0
+    working_x = x[start:]
+    working_y = y[start:]
+    return np.corrcoef(working_x, working_y)[0][1] * \
+        np.log(min(1000, np.sum(working_x)) * min(1000, np.sum(working_y)))
 
 
 
@@ -19,13 +33,23 @@ def find_best_fit(x, y):
     offset = 0
     for i in range(len(x)):
         y_range = len(y) - i
-        offset_score = get_score(x[i:], y[:y_range])
+        x_slice = x[i:]
+        y_slice = y[:y_range]
+        if sum(x_slice) == 0 or sum(y_slice) == 0:
+        	break
+        offset_score = get_score(x_slice, y_slice)
         if offset_score > best_score:
             best_score = offset_score
             offset = i
     for i in range(len(y)):
         x_range = len(x) - i
-        offset_score = get_score(y[i:], x[:x_range])
+        x_slice = x[:x_range]
+        y_slice = y[i:]
+        if sum(x_slice) == 0 or sum(y_slice) == 0:
+        	break
+        offset_score = get_score(y_slice, x_slice)
+        if offset_score == 0:
+        	break
         if offset_score > best_score:
             best_score = offset_score
             offset = -1 * i
