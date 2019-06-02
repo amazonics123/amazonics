@@ -2,6 +2,7 @@ from mrjob.job import MRJob
 import numpy as np
 import regression
 import pandas as pd
+import heapq
 
 class toplines(MRJob):
     
@@ -19,30 +20,63 @@ class toplines(MRJob):
         yield (arr, arrmatey), score
 
     def combiner_init(self):
+        '''
         score_store = []
         covars_store = []
+        '''
+        scores = {}
 
     def combiner(self, covars, score):
-        score_store.append(score)
-        covars_store.append(covars)
+        scores[covars] = score
 
     def combiner_final(self):
+        '''
+        
         dataframe = pd.DataFrame(np.array([score_store, covars_store]), columns=['scores', 'covars'])
-        dataframe = dataframe.sort_values(by=['scores'])
-        yield None, dataframe.head(50)
+        yield None, dataframe.sort_values(by=['scores']).head(50)
+        '''
+        k = 50
+        for i in len(dict):
+            n = int(i)
+            scores[n] = scores.setdefault(n, 0) + 1
+        h = [(score, covars) for (covars, score) in list(scores.items())[:k]]
+        heapq.heapify(h)
+
+        for covars, score in scores.items()[k:]:
+            min_score, min_covars = h[0]
+
+            if score > min_score:
+                heapq.heapreplace(h, (score, covars))
+        
+        h.sort(reverse=True)
+        yield None, h
 
     def reducer_init(self):
-        over_df = pd.DataFrame(columns=['scores', 'covars'])
+        list_tops = []
 
-    def reducer(self, _, df):
-        over_df = over_df.append(df)
+    def reducer(self, _, h):
+        list_tops.append(h)
 
     def reducer_final(self):
-    	yield None, over_df.sort_values(by=['scores']).head(50)
+        h = list_tops[:k]
+    	heapq.heapify(h)
+        
+        for covars, score in scores.items()[k:]:
+            min_score, min_covars = h[0]
+
+            if score > min_score:
+                heapq.heapreplace(h, (score, covars))
+        
+        h.sort(reverse=True)
+        yield None, h
 
     def steps(self):
         return [
             MRStep(mapper=self.mapper_first),
             MRStep(mapper=self.mapper_second,
+            	combiner_init=self.combiner_init,
             	combiner=self.combiner,
-            	reducer=self.reducer)]
+            	combiner_final=self.combiner_final,
+            	reducer_init=self.reducer_init,
+            	reducer=self.reducer,
+            	reducer_final=self.reducer_final)]
