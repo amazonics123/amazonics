@@ -28,8 +28,7 @@ class toplines(MRJob):
 
     def combiner_final(self):
         dataframe = pd.DataFrame(np.array([score_store, covars_store]), columns=['scores', 'covars'])
-        dataframe = dataframe.sort_values(by=['scores'])
-        yield None, dataframe.head(50)
+        yield None, dataframe.sort_values(by=['scores']).head(50)
 
     def reducer_init(self):
         over_df = pd.DataFrame(columns=['scores', 'covars'])
