@@ -17,8 +17,8 @@ class toplines(MRJob):
 
     def mapper_second(self, arr, line):
         arrmatey = line.split()
-        score = regression.find_best_fit(arr, arrmatey)
-        yield (arr, arrmatey), score
+        tuple_score = regression.do_everything(arr, arrmatey)
+        yield tuple_score[0], tuple_score[1]
 
     def combiner_init(self):
         '''
