@@ -31,22 +31,44 @@ class toplines(MRJob):
 
     def combiner_final(self):
         '''
+        
         dataframe = pd.DataFrame(np.array([score_store, covars_store]), columns=['scores', 'covars'])
         yield None, dataframe.sort_values(by=['scores']).head(50)
         '''
-        h = [(score, covars) for (covars, score) in list(counts.items())[:k]]
+        k = 50
+        for i in len(dict):
+            n = int(i)
+            scores[n] = scores.setdefault(n, 0) + 1
+        h = [(score, covars) for (covars, score) in list(scores.items())[:k]]
         heapq.heapify(h)
 
-        for covars, score in
+        for covars, score in scores.items()[k:]:
+            min_score, min_covars = h[0]
+
+            if score > min_score:
+                heapq.heapreplace(h, (score, covars))
+        
+        h.sort(reverse=True)
+        yield None, h
 
     def reducer_init(self):
-        over_df = pd.DataFrame(columns=['scores', 'covars'])
+        list_tops = []
 
-    def reducer(self, _, df):
-        over_df = over_df.append(df)
+    def reducer(self, _, h):
+        list_tops.append(h)
 
     def reducer_final(self):
-    	yield None, over_df.sort_values(by=['scores']).head(50)
+        h = list_tops[:k]
+    	heapq.heapify(h)
+        
+        for covars, score in scores.items()[k:]:
+            min_score, min_covars = h[0]
+
+            if score > min_score:
+                heapq.heapreplace(h, (score, covars))
+        
+        h.sort(reverse=True)
+        yield None, h
 
     def steps(self):
         return [
