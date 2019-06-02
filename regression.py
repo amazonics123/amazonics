@@ -9,15 +9,15 @@ def get_score(x, y):
     orig_len = len(x)
     start = 0
     for i in range(orig_len):
-    	if x[i] != 0:
-    		start = i
-    		break
+        if x[i] != 0:
+            start = i
+            break
     for j in range(start, orig_len):
-    	if y[j] != 0:
-    		start = j
-    		break
-    	if j == orig_len - 1:
-    		return 0
+        if y[j] != 0:
+            start = j
+            break
+        if j == orig_len - 1:
+            return 0
     working_x = x[start:]
     working_y = y[start:]
     return np.corrcoef(working_x, working_y)[0][1] * \
@@ -36,7 +36,7 @@ def find_best_fit(x, y):
         x_slice = x[i:]
         y_slice = y[:y_range]
         if sum(x_slice) == 0 or sum(y_slice) == 0:
-        	break
+            break
         offset_score = get_score(x_slice, y_slice)
         if offset_score > best_score:
             best_score = offset_score
@@ -46,10 +46,10 @@ def find_best_fit(x, y):
         x_slice = x[:x_range]
         y_slice = y[i:]
         if sum(x_slice) == 0 or sum(y_slice) == 0:
-        	break
+            break
         offset_score = get_score(y_slice, x_slice)
         if offset_score == 0:
-        	break
+            break
         if offset_score > best_score:
             best_score = offset_score
             offset = -1 * i
@@ -59,18 +59,16 @@ def find_best_fit(x, y):
 
 
 def do_everything(line1, line2):
-	'''
-	'''
+    '''
+    '''
 
-	id1 = line1[0]
-	id2 = line2[0]
-	x = []
-	y = []
-	for i in range(everything but 0 to len(line1)):
-		x.append(float(i))
-    for i in range(everything but 0 to len(line2)):
-		y.append(float(i))
-	x = line1[1]
-	y = line2[1]
-	best = find_best_fit(x,y)
-	return((id1, id2, best[1]), best[0])
+    id1 = line1[0]
+    id2 = line2[0]
+    x = []
+    y = []
+    for i in range(1, len(line1)):
+        x.append(float(line1[i]))
+    for i in range(1, len(line2)):
+        y.append(float(line2[i]))
+    best = find_best_fit(x,y)
+    return((id1, id2, best[1]), best[0])

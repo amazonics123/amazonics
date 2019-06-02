@@ -12,11 +12,12 @@ class toplines(MRJob):
         pass to another mapper? for this line, give another mapper
         the csv and the line and then compare them all
         '''
-        arr = line.split()
+
+        arr = line.strip("[]").split(", ")
         yield arr, line
 
     def mapper_second(self, arr, line):
-        arrmatey = line.split()
+        arrmatey = line.strip("[]").split(", ")
         tuple_score = regression.do_everything(arr, arrmatey)
         yield tuple_score[0], tuple_score[1]
 
