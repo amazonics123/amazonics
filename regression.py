@@ -61,9 +61,10 @@ def find_best_fit(x, y):
 def do_everything(line1, line2):
 	'''
 	'''
-	
+
 	id1 = line1[0]
 	id2 = line2[0]
 	x = line1[1]
 	y = line2[1]
-	return((id1, id2), find_best_fit(x,y))
+	best = find_best_fit(x,y)
+	return((id1, id2, best[1]), best[0])
