@@ -44,5 +44,9 @@ class toplines(MRJob):
         return [
             MRStep(mapper=self.mapper_first),
             MRStep(mapper=self.mapper_second,
+            	combiner_init=self.combiner_init,
             	combiner=self.combiner,
-            	reducer=self.reducer)]
+            	combiner_final=self.combiner_final,
+            	reducer_init=self.reducer_init,
+            	reducer=self.reducer,
+            	reducer_final=self.reducer_final)]
