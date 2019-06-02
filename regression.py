@@ -64,6 +64,12 @@ def do_everything(line1, line2):
 
 	id1 = line1[0]
 	id2 = line2[0]
+	x = []
+	y = []
+	for i in range(everything but 0 to len(line1)):
+		x.append(float(i))
+    for i in range(everything but 0 to len(line2)):
+		y.append(float(i))
 	x = line1[1]
 	y = line2[1]
 	best = find_best_fit(x,y)
