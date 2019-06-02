@@ -1,4 +1,5 @@
 from mrjob.job import MRJob
+from mrjob.step import MRStep
 import numpy as np
 import regression
 import pandas as pd
@@ -11,12 +12,12 @@ class toplines(MRJob):
         pass to another mapper? for this line, give another mapper
         the csv and the line and then compare them all
         '''
-        arr = np.asarray(line.split())
-    	yield arr, None
+        arr = line.split()
+        yield arr, line
 
     def mapper_second(self, arr, line):
-        arrmatey = np.asarray(line.split())
-        score = regression.find_best_fit(arr, value_storer[-1])
+        arrmatey = line.split()
+        score = regression.find_best_fit(arr, arrmatey)
         yield (arr, arrmatey), score
 
     def combiner_init(self):
@@ -59,7 +60,7 @@ class toplines(MRJob):
 
     def reducer_final(self):
         h = list_tops[:k]
-    	heapq.heapify(h)
+        heapq.heapify(h)
         
         for covars, score in scores.items()[k:]:
             min_score, min_covars = h[0]
@@ -74,9 +75,13 @@ class toplines(MRJob):
         return [
             MRStep(mapper=self.mapper_first),
             MRStep(mapper=self.mapper_second,
-            	combiner_init=self.combiner_init,
-            	combiner=self.combiner,
-            	combiner_final=self.combiner_final,
-            	reducer_init=self.reducer_init,
-            	reducer=self.reducer,
-            	reducer_final=self.reducer_final)]
+                combiner_init=self.combiner_init,
+                combiner=self.combiner,
+                combiner_final=self.combiner_final,
+                reducer_init=self.reducer_init,
+                reducer=self.reducer,
+                reducer_final=self.reducer_final)]
+
+
+if __name__ == '__main__':
+    toplines.run()
