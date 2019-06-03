@@ -12,16 +12,14 @@ def get_score(x, y):
         if x[i] != 0:
             start = i
             break
-    for j in range(start, orig_len):
+    for j in range(orig_len):
         if y[j] != 0:
-            start = j
+            start = max(j, start)
             break
-        if j >= orig_len - 1:
-            return 0
     working_x = x[start:]
     working_y = y[start:]
     return np.corrcoef(working_x, working_y)[0][1] * \
-        np.log(min(1000, sum(working_x)) * min(1000, sum(working_y)))
+        np.log(max(1, min(1000, sum(working_x)) * min(1000, sum(working_y))))
 
 
 
