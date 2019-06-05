@@ -119,7 +119,7 @@ def compare_lexicographic_order(str1, str2):
     for i in range(10):
         o1 = ord(str1[i])
         o2 = ord(str2[i])
-        if  o1 > o2:
+        if o1 > o2:
             return True
         if o1 < o2:
             return False
