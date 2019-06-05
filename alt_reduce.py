@@ -4,35 +4,27 @@ import numpy as np
 import regression
 import pandas as pd
 import heapq
+import csv
 
 class toplines(MRJob):
     
 
-    one mapper
-    see if one string is lexicographically less thna other
-    two copies of data file: one is one mapper is reading, other is one you'll 
-    explicitly open in file - for each line, loop through the whole csv with csvreader
-    or something
-    add to command line --file file2.csv
-    def mapper_init(self):
-        self.lines_run = []
-        self.score_tuples = []
+    # add to command line --file file2.csv
 
     def mapper(self, _, line):
 
         linemod = line[1:11]+", "+line[14:-1]
         arr = linemod.split(", ")[:-1]
 
-        for lyne in self.lines_run:
-            tuple_score = regression.do_everything(arr, lyne)
-            pair = str(tuple_score[0][0])+" "+str(tuple_score[0][1])+" "+str(tuple_score[0][2])
-            self.score_tuples.append((pair, tuple_score[1]))
+        with open(file2, newline='') as csvfile:
+            reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+            for row in reader:
+                linebod = line[1:11]+", "+line[14:-1]
+                arrmatey = linebod.split(", ")[:-1]
+                tuple_score = regression.do_everything(linebod, arrmatey)
+                pair = str(tuple_score[0][0])+" "+str(tuple_score[0][1])+" "+str(tuple_score[0][2])
+                yield pair, tuple_score[1]
 
-        self.lines_run.append(arr)
-
-    def mapper_final(self):
-        for pair, score in self.score_tuples:
-            yield pair, score
     '''
     def mapper_first(self, _, line1):
         
