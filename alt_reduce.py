@@ -7,7 +7,13 @@ import heapq
 
 class toplines(MRJob):
     
-    
+
+    one mapper
+    see if one string is lexicographically less thna other
+    two copies of data file: one is one mapper is reading, other is one you'll 
+    explicitly open in file - for each line, loop through the whole csv with csvreader
+    or something
+    add to command line --file file2.csv
     def mapper_init(self):
         self.lines_run = []
         self.score_tuples = []
