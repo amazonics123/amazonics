@@ -7,30 +7,55 @@ import heapq
 
 class toplines(MRJob):
     
-    def mapper_first(self, _, line):
-        '''
-        pass to another mapper? for this line, give another mapper
-        the csv and the line and then compare them all
-        '''
+    '''
+    def mapper_init(self):
+        self.lines_run_already = []
 
-        arr = line.strip("[]").split(", ")
-        yield arr, line
+    def mapper(self, _, line):
+        linemod = line[1:11]+", "+line[14:-1]
+        print(line[1:11])
+        arr = linemod.split(", ")[:-2]
+
+        for line in self.lines_run_already:
+            tuple_score = 
+    '''
+    def mapper_first(self, _, line):
+        
+        #below we have some very janky string comprehension
+        
+        linemod = line[1:11]+", "+line[14:-1]
+        #print(line[1:11])
+        arr = linemod.split(", ")[:-2]
+
+        yield arr, linemod
 
     def mapper_second(self, arr, line):
-        arrmatey = line.strip("[]").split(", ")
+        linebod = line[0:10]+", "+line[14:-1]
+        #print(line[0:10])
+        arrmatey = linebod.split(", ")[:-1]
         tuple_score = regression.do_everything(arr, arrmatey)
         value = str(tuple_score[0][0])+" "+str(tuple_score[0][1])+" "+str(tuple_score[0][2])
-        yield value, tuple_score[1]
+        #print(tuple_score[1])
+        a = tuple_score[1]
+        yield value, a
+    
 
     def combiner_init(self):
         '''
         score_store = []
         covars_store = []
         '''
-        scores = {}
+        self.scores = {}
 
-    def combiner(self, covars, score):
-        scores[covars] = score
+    def combiner(self, covars, scores):
+        ''
+        pair = covars
+        score = list(scores)[0]
+        #print(pair)
+        #print(score)
+        #print("aaa")
+        self.scores[covars] = score
+        score_list = list(scores)
 
     def combiner_final(self):
         '''
@@ -39,36 +64,40 @@ class toplines(MRJob):
         yield None, dataframe.sort_values(by=['scores']).head(50)
         '''
         k = 50
-        for i in len(dict):
-            n = int(i)
-            scores[n] = scores.setdefault(n, 0) + 1
-        h = [(score, covars) for (covars, score) in list(scores.items())[:k]]
+        h = []
+        h = [(score, covars) for (covars, score) in list(self.scores.items())[:k]]
         heapq.heapify(h)
-
-        for covars, score in scores.items()[k:]:
+        q = [(score, covars) for (covars, score) in list(self.scores.items())[k:]]
+        for score, covars in q:
             min_score, min_covars = h[0]
 
             if score > min_score:
                 heapq.heapreplace(h, (score, covars))
         
         h.sort(reverse=True)
+        #print(h)
         yield None, h
 
     def reducer_init(self):
-        list_tops = []
+        self.list_tops = []
 
     def reducer(self, _, h):
-        list_tops.append(h)
+        self.list_tops = self.list_tops + list(h)[0]
 
     def reducer_final(self):
-        h = list_tops[:k]
+
+        k=50
+
+        h = self.list_tops[:k]
         heapq.heapify(h)
-        
-        for covars, score in scores.items()[k:]:
+
+        #print(self.list_tops[0])
+
+        for unit in self.list_tops:
             min_score, min_covars = h[0]
 
-            if score > min_score:
-                heapq.heapreplace(h, (score, covars))
+            if unit[0] > min_score:
+                heapq.heapreplace(h, unit)
         
         h.sort(reverse=True)
         yield None, h
