@@ -21,13 +21,11 @@ class toplines(MRJob):
         with open(sys.argv[3], newline='') as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
-                linebod = str(row[1:11])+", "+str(row[14:-1])
-                arrmatey = linebod.split(" ")[:-1]
-                print(arrmatey[0])
-                print(arr[0])
+                roww = ' '.join(row)
+                linebod = str(roww[0:10])+" "+str(roww[14:-1])
+                arrmatey = list(filter(None, linebod.split(" ")[:-1]))
                 if compare_lexicographic_order(arr[0], arrmatey[0]):
-                    print("asdf")
-                    tuple_score = regression.do_everything(linebod, arrmatey)
+                    tuple_score = regression.do_everything(arr, arrmatey)
                     pair = str(tuple_score[0][0])+" "+str(tuple_score[0][1])+" "+str(tuple_score[0][2])
                     yield pair, tuple_score[1]
 
