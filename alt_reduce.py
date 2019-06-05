@@ -19,11 +19,10 @@ class toplines(MRJob):
         arr = linemod.split(", ")[:-2]
 
         with open(sys.argv[3], newline='') as csvfile:
-            reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+            reader = csv.reader(csvfile)
             for row in reader:
-                print(row)
-                linebod = row[1:11]+", "+row[14:-1]
-                arrmatey = linebod.split(", ")[:-1]
+                linebod = str(row[1:11])+", "+str(row[14:-1])
+                arrmatey = linebod.split(" ")[:-1]
                 print(arrmatey[0])
                 print(arr[0])
                 if compare_lexicographic_order(arr[0], arrmatey[0]):
