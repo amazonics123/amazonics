@@ -5,25 +5,27 @@ import regression
 import pandas as pd
 import heapq
 import csv
+import sys
 
 class toplines(MRJob):
     
 
     # add to command line --file file2.csv
 
+    
+
     def mapper(self, _, line):
-
         linemod = line[1:11]+", "+line[14:-1]
-        arr = linemod.split(", ")[:-1]
+        arr = linemod.split(", ")
 
-        with open(file2, newline='') as csvfile:
-            reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+        with open(sys.argv[3], newline='') as csvfile:
+            reader = csv.reader(csvfile, delimiter='\t')
             for row in reader:
-                linebod = line[1:11]+", "+line[14:-1]
-                arrmatey = linebod.split(", ")[:-1]
-                tuple_score = regression.do_everything(linebod, arrmatey)
-                pair = str(tuple_score[0][0])+" "+str(tuple_score[0][1])+" "+str(tuple_score[0][2])
-                yield pair, tuple_score[1]
+                arrmatey = [row[0]]+row[1][1:-1].split(', ')
+                if compare_lexicographic_order(arr[0], arrmatey[0]):
+                    tuple_score = regression.do_everything(arr, arrmatey)
+                    pair = str(tuple_score[0][0])+" "+str(tuple_score[0][1])+" "+str(tuple_score[0][2])
+                    yield pair, tuple_score[1]
 
     '''
     def mapper_first(self, _, line1):
