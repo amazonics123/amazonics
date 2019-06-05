@@ -7,22 +7,22 @@ import heapq
 
 class toplines(MRJob):
     
-    '''
+    
     def mapper_init(self):
-        self.lines_run_already = []
+        self.lines_run = []
         self.score_tuples = []
 
     def mapper(self, _, line):
-        linemod = line[1:11]+", "+line[14:-1]
-        print(line[1:11])
-        arr = linemod.split(", ")[:-2]
 
-        for lyne in self.lines_run_already:
-            tuple_score = tuple_score = regression.do_everything(arr, lyne)
+        linemod = line[1:11]+", "+line[14:-1]
+        arr = linemod.split(", ")[:-1]
+
+        for lyne in self.lines_run:
+            tuple_score = regression.do_everything(arr, lyne)
             pair = str(tuple_score[0][0])+" "+str(tuple_score[0][1])+" "+str(tuple_score[0][2])
             self.score_tuples.append((pair, tuple_score[1]))
 
-        lines_run.append(linemod)
+        self.lines_run.append(arr)
 
     def mapper_final(self):
         for pair, score in self.score_tuples:
@@ -47,6 +47,7 @@ class toplines(MRJob):
         #print(tuple_score[1])
         a = tuple_score[1]
         yield value, a
+    '''
     
 
     def combiner_init(self):
@@ -110,17 +111,6 @@ class toplines(MRJob):
         
         h.sort(reverse=True)
         yield None, h
-
-    def steps(self):
-        return [
-            MRStep(mapper=self.mapper_first),
-            MRStep(mapper=self.mapper_second,
-                combiner_init=self.combiner_init,
-                combiner=self.combiner,
-                combiner_final=self.combiner_final,
-                reducer_init=self.reducer_init,
-                reducer=self.reducer,
-                reducer_final=self.reducer_final)]
 
 
 if __name__ == '__main__':
