@@ -16,14 +16,12 @@ class toplines(MRJob):
 
     def mapper(self, _, line):
         linemod = line[1:11]+", "+line[14:-1]
-        arr = linemod.split(", ")[:-2]
+        arr = linemod.split(", ")
 
         with open(sys.argv[3], newline='') as csvfile:
-            reader = csv.reader(csvfile)
+            reader = csv.reader(csvfile, delimiter='\t')
             for row in reader:
-                roww = ' '.join(row)
-                linebod = str(roww[0:10])+" "+str(roww[14:-1])
-                arrmatey = list(filter(None, linebod.split(" ")[:-1]))
+                arrmatey = [row[0]]+row[1][1:-1].split(', ')
                 if compare_lexicographic_order(arr[0], arrmatey[0]):
                     tuple_score = regression.do_everything(arr, arrmatey)
                     pair = str(tuple_score[0][0])+" "+str(tuple_score[0][1])+" "+str(tuple_score[0][2])
