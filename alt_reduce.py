@@ -110,7 +110,7 @@ class toplines(MRJob):
                 heapq.heapreplace(h, unit)
         
         h.sort(reverse=True)
-        yield None, h
+        yield len(h), h
 
 
 if __name__ == '__main__':
