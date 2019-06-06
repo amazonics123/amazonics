@@ -17,7 +17,7 @@ class toplines(MRJob):
     def mapper(self, _, line):
         linemod = line[1:11]+", "+line[14:-1]
         arr = linemod.split(", ")
-        with open(sys.argv[3], newline='') as csvfile:
+        with open(sys.argv[-1], newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter='\t')
             for row in reader:
                 arrmatey = [row[0]]+row[1][1:-1].split(', ')
