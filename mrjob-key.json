@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "authentic-ether-242923",
+  "private_key_id": "532e27b712ba5b79a19733bfa4e55dbc957721be",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDMuxG2V0g7wHro\nF91a9nsfqOJOQNVxM1r1gLETrNeR5d5pYYjqJJo+mCDkhnGmpZPeORe1boGPUvJH\nxUfUxo9hjbRC9pQfFM0UuG9dREaj2B6OtxGD2QLSISp54XmXJ2APjz2xrc7TGwnn\nsRdOMi3TeePiVYyuDtgR91F2dyMRbdX/VRdLcVA71FwBt2620aEf2fRVECUMP1lc\nNaG+UQoaPz4uW0Lsoi+wp0RbqGa1Y2Nd3vEzEq95e3Y4C3ibte+dw0h7WwyMjg/Q\nsGINkZ1dqH4sKHNxf08WXwJGJDs4j6qpBIoFJC+MD9HSGlx/y+uoDZt9rswZEdMw\nEbedHxTdAgMBAAECggEAJvJ5iqItHCzgVNHhauIUBzBWKQPddwUJi0W5qiAJ/Hfp\n6UtERCLFcx32t/K5oTXDnRVoZLwKiq0BaVTm9tv1P944yjplcEpBP21cxjXsaFP/\ncC/0dYwtpLLphTk3K+GyPROHbYs+mtt8dWazo80Y+a+pAhA7TIuHYFeX2D0O30wZ\n8J1AwL9/S7dPPVYdKoZDlyRrBys2dyyrrVIgDzX29gtMORGWMCFO5nLNPgqhVZ/O\nK3DXTrzJyHOxroX/cBmk8ha0sF3XqkeIdrwmVoeErm+xmlvhsg+CRF253mbrbtsF\nEW5GRClx8WSrPbql0Ie/b/0BsCs7iiUZDMRmsKI+QQKBgQD4n7tThT2toOe+hgry\nwoRRweGsDoTfk9gpxGbri5zMk/jhmTOKQa10MWkVdsQGj6zR3WoaFWTK+MqEhjTp\ngjaC0lWmYH9lFiDG8ughyukasCFfA92CN54IZAmsAphoZCUSQiLBVT7gHQNK2d6l\nFZB0LBOhdTQ9w3yTf+ekmgU/PQKBgQDSzflR0FxPmDYyjXAq1ZXiB1l+gKDG/0tb\nH7t20Jr1z7ztHBA8dPapdARrOXOBj2fowNvxj7L+paQ4j6q4kzUs4TNntNuXhrSv\nOuN3bg76Xi3aHOBiFstkH59YQMILm/NWxzezrCeB/YR9o6s2PFwDR++NaGwwSJ0E\nRG06xjiGIQKBgQCHPVQHlYW8abdFkuJntNmHI4CfN/KdL225IoWdgP8U5TTPeqdn\ngFxaxPnVXBo7O3IVYmxxrct7ASQgPGSR1GvUc5d1fi4uDYBc2ArfPuHXy5ELfy3B\nxIEpLUl5kJvYxQjJSsJfCgC+pemBkMukXvuJxeQTwo5dPnYIQd3+Um2iPQKBgQC5\nnZfMjDTb+OCv/o4niU2iampI0yW+UwidQgGlCuWHT9XAyhcZxLt0Va2WZE3qZMVP\n0pFXz/oB8wP4sbfXMfd+fwTuafd5IqlyKd4kSQpzNf4VsZt5gyywCpAZ+1thMX5A\niMXpNMrM0NeacUTOSrOSSAMMdkfc8/Md0MqFGAipQQKBgAuXCaLbqL4f3JnR2Nle\nZQ7Ab2nrcKyUsJVa7XJFcemnstEqJMKeCZ/QIO1WWydq71P9OOlQ2U/5IShlhEuB\nIFT/iRwu+iOYEjABuiiX0V9zj0Ce4lQTTxddPrxUyQdhX/OymIiULAIcmCr2HH0v\nUZqOCy3ClSJ0dObYK0a2E7Ul\n-----END PRIVATE KEY-----\n",
+  "client_email": "max-amazonics@authentic-ether-242923.iam.gserviceaccount.com",
+  "client_id": "103407240536046137739",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/max-amazonics%40authentic-ether-242923.iam.gserviceaccount.com"
+}
