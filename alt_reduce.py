@@ -14,17 +14,25 @@ class toplines(MRJob):
 
     
 
+    def mapper_init(self):
+        self.lines_run = []
+        self.score_tuples = []
+
     def mapper(self, _, line):
+
         linemod = line[1:11]+", "+line[14:-1]
-        arr = linemod.split(", ")
-        with open(sys.argv[-1], newline='') as csvfile:
-            reader = csv.reader(csvfile, delimiter='\t')
-            for row in reader:
-                arrmatey = [row[0]]+row[1][1:-1].split(', ')
-                if compare_lexicographic_order(arr[0], arrmatey[0]):
-                    tuple_score = regression.do_everything(arr, arrmatey)
-                    pair = str(tuple_score[0][0])+" "+str(tuple_score[0][1])+" "+str(tuple_score[0][2])
-                    yield pair, tuple_score[1]
+        arr = linemod.split(", ")[:-1]
+
+        for lyne in self.lines_run:
+            tuple_score = regression.do_everything(arr, lyne)
+            pair = str(tuple_score[0][0])+" "+str(tuple_score[0][1])+" "+str(tuple_score[0][2])
+            self.score_tuples.append((pair, tuple_score[1]))
+
+        self.lines_run.append(arr)
+
+    def mapper_final(self):
+        for pair, score in self.score_tuples:
+            yield pair, score
 
     '''
     def mapper_first(self, _, line1):
