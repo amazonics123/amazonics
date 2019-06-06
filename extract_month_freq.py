@@ -13,8 +13,8 @@ class MRExtract(MRJob):
         date = re.findall(r'(?<=")[0-9]{2}\s[0-9]{1,2},\s[0-9]{4}', line)[0]
         m = int(date[:2])
         yyyy = int(date[-4:])
-        arr = (20 * 12) * [0]
-        i = (yyyy - 1995) * 12 + (m - 1)
+        arr = (19 * 12) * [0]
+        i = (yyyy - 1996) * 12 + (m - 1)
         arr[i] += 1
         yield prod_id, arr
 
