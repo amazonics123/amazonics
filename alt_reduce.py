@@ -18,7 +18,7 @@ class toplines(MRJob):
         linemod = line[1:11]+", "+line[14:-1]
         arr = linemod.split(", ")[:-2]
 
-        with open(sys.argv[3], newline='') as csvfile:
+        with open(sys.argv[-1], newline='') as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
                 roww = ' '.join(row)
