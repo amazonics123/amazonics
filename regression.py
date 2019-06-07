@@ -20,8 +20,7 @@ def get_score(x, y):
     working_y = y[start:]
     sumx = sum(working_x)
     sumy = sum(working_y)
-    return covariance(working_x, working_y, sumx, sumy) * \
-        (min(2000, sumx) * min(2000, sumy))**(1/2)
+    return covariance(working_x, working_y, sumx, sumy)
     #return np.corrcoef(working_x, working_y)[0][1] * \
         #np.log(max(1, min(1000, sum(working_x)) * min(1000, sum(working_y))))
 
