@@ -30,9 +30,6 @@ def find_best_fit(x, y):
     '''
     '''
 
-    if sum(x) <= 20 or sum(y) <= 20:
-        return (0, 0)
-
     orig_len = len(x)
     best_score = 0
     offset = 0
@@ -41,7 +38,7 @@ def find_best_fit(x, y):
         y_range = orig_len - i
         x_slice = x[i:]
         y_slice = y[:y_range]
-        if sum(x_slice) <= 20 or sum(y_slice) <= 20:
+        if sum(x_slice) == 0 or sum(y_slice) == 0:
             break
         offset_score = get_score(x_slice, y_slice)
         if offset_score > best_score:
@@ -52,11 +49,9 @@ def find_best_fit(x, y):
         x_range = len(x) - i
         x_slice = x[:x_range]
         y_slice = y[i:]
-        if sum(x_slice) <= 20 or sum(y_slice) <= 20:
+        if sum(x_slice) == 0 or sum(y_slice) == 0:
             break
         offset_score = get_score(y_slice, x_slice)
-        if offset_score == 0:
-            break
         if offset_score > best_score:
             best_score = offset_score
             offset = -1 * i
