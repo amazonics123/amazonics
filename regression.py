@@ -1,6 +1,6 @@
 #Code for running regressions and selecting a explaination score from two
 
-import numpy as np
+#import numpy as np
 
 def get_score(x, y):
     '''
