@@ -14,7 +14,14 @@ class MRExtract(MRJob):
         yyyy = int(date[-4:])
         arr = (19 * 12) * [0]
         i = (yyyy - 1996) * 12 + (m - 1)
-        arr[i] += 1
+        if (i <= 1) or (i >= 225):
+            arr[i] += 1
+        else:
+            arr[i - 2] += 0.1
+            arr[i - 1] += 0.3
+            arr[i] += 1
+            arr[i + 1] += 0.3
+            arr[i + 2] += 0.1
         yield prod_id, arr
 
     def combiner(self, prod_id, date_lists):
