@@ -1,6 +1,5 @@
 from mrjob.job import MRJob
 from mrjob.step import MRStep
-import numpy as np
 import re
 import csv
 
