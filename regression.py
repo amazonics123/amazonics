@@ -1,9 +1,17 @@
 #Code for running regressions and selecting a explaination score from two
 
-#import numpy as np
 
 def get_score(x, y):
     '''
+    Gets the covariance between x and y, starting from the later of the first 
+        nonzero entries of x or y 
+
+    Inputs:
+        x: a list of floats
+        y: a list of floats.  x and y must have the same length
+
+    Output:
+        The score of x and y (float)
     '''
     
     orig_len = len(x)
@@ -21,13 +29,21 @@ def get_score(x, y):
     sumx = sum(working_x)
     sumy = sum(working_y)
     return covariance(working_x, working_y, sumx, sumy)
-    #return np.corrcoef(working_x, working_y)[0][1] * \
-        #np.log(max(1, min(1000, sum(working_x)) * min(1000, sum(working_y))))
-
+    
 
 
 def find_best_fit(x, y):
     '''
+    Runs through all possible ways to align x and y that for which both x and 
+        y have nonzero entries and chooses the alighment with the highest score
+
+    Inputs:
+        x: a list of floats
+        y: a list of floats.  x and y must have the same length
+
+    Output: a tuple containing the best score among all alignments of x and y
+        and the number of months by which x and y are offset to obtain this
+        highest score
     '''
 
     orig_len = len(x)
@@ -62,6 +78,16 @@ def find_best_fit(x, y):
 
 def do_everything(line1, line2):
     '''
+    A wrapper function for find_best_fit that takes in the input the mapper
+        gives it and applies find_best_fit to it.
+
+    Inputs:
+        line1 (list of strings): a read line of a csv
+        line2 (list of strings): a read line of a csv
+
+    Outputs: a tuple that contains a (tuple of product ids (strings) and 
+        the offset that gives the best score from find_best_fit (int)) and 
+        (the best score from find_best_fit (float))
     '''
 
     id1 = line1[0]
@@ -81,6 +107,17 @@ def do_everything(line1, line2):
 
 def covariance(x, y, sumx, sumy):
     '''
+    A function that calculates the covariance of x and y
+
+    Inputs:
+        x: a list of floats
+        y: a list of floats.  x and y must have the same length
+        sumx: the sum of items of x (float)
+        sumy: the sum of items of y (float).  Sums are included as inputs to 
+        avoid redundant calculations within the find_best_fit functions.
+    
+    Output:
+        The covariance of x and y (float)
     '''
     N = len(x)
     meanx = sumx/N
