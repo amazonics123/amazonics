@@ -5,6 +5,14 @@ import gzip
 import json
 import gzip
 
+'''NOTE: This file was used in exploring our hypothesis, but not part
+of our final code'''
+
+
+
+'''Following two functions used to create dataframe of reviews from 
+compressed reviews file'''
+
 
 def parse(path): 
 	g = gzip.open(path, 'rb') 
@@ -19,18 +27,11 @@ def getDF(path):
 		i += 1 
 	return pd.DataFrame.from_dict(df, orient='index')
 
-
-def get_meta_DF(path): 
-	i = 0 
-	df = {} 
-	for d in parse(path): 
-		df[i] = d 
-		i += 1 	
-#	df = pd.DataFrame.from_dict(df, orient='index').dropna()
-	return pd.DataFrame.from_dict(df, orient='index')
-
-
 def product_tseries(df, asin, density=False):
+	'''
+	Input: (pd.DataFrame) reviews dataframe, (str) product id
+	Output: (plt object) plot a review frequency plot for a given product
+	'''
 	one_product = df[df['asin'] == asin]
 	years = []
 	for t in one_product["reviewTime"]:
@@ -41,6 +42,12 @@ def product_tseries(df, asin, density=False):
 	plt.show()
 
 def month_distribution(df):
+	'''
+	Input: (pd.DataFrame) reviews dataframe, (str) product id
+	Output: (dict) monthly frequency distribution 
+
+	E.g. {prod_id: [freq1, ...]}
+	'''
 	grouped = df.groupby('asin')
 	review_dict = {}
 	for product, review_df in grouped:
@@ -51,6 +58,12 @@ def month_distribution(df):
 	return review_dict
 
 def quarterly_distribution(df):
+	'''
+	Input: (pd.DataFrame) reviews dataframe, (str) product id
+	Output: (dict) qtrly frequency distribution 
+
+	E.g. {prod_id: [freq1, ...]}
+	'''
 	grouped = df.groupby('asin')
 	review_dict = {}
 	for product, review_df in grouped:
