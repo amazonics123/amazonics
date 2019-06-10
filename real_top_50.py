@@ -12,6 +12,9 @@ Instructions: to see the top 50 list, run the following:
 	
  '''
 
+'''Following two functions used to create metadata dict from 
+compressed metadata file'''
+
 def parse(path): 
 	g = gzip.open(path, 'rb') 
 	for l in g: 
@@ -29,6 +32,12 @@ def getDF(path):
 	return df
 
 def find_real_50(path):
+	'''
+	Returns pandas df of top 50 product pairs in descending order
+	of score
+	Input: (str) file name 
+	Output: (pd.DataFrame) a dataframe 
+	'''
 	file = open(path, "r")
 	score_list = []
 	label_list = []
@@ -47,6 +56,12 @@ def find_real_50(path):
 	return(df.head(50))
 
 def result_names(meta, top_50):
+	'''
+	Prints score, product pair, their timeshift, and mean, variance
+	of time shifts in top 50 results.
+	Input: (dict) metadata 
+	Output: None
+	'''
 	shift_list = []
 	for n, row in top_50.iterrows():
 		split, score = row[0].split(" "), row[1]
