@@ -47,13 +47,17 @@ def find_real_50(path):
 	return(df.head(50))
 
 def result_names(meta, top_50):
+	shift_list = []
 	for n, row in top_50.iterrows():
 		split, score = row[0].split(" "), row[1]
 		prod1, prod2, shift = split[0], split[1], split[2]
+		shift_list.append(abs(int(shift)))
 		title1 = meta[prod1]
 		title2 = meta[prod2]
 		print(score, " ", title1, " + ", title2 + " ", shift)
 		print("\n")
+	print("mean time shift was:", np.mean(shift_list))
+	print("variance of time shift was:", np.var(shift_list))
 
 if __name__ == '__main__':
 	df = getDF(sys.argv[1])
